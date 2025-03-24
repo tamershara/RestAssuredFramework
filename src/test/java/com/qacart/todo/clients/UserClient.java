@@ -7,7 +7,9 @@ import static com.qacart.todo.clients.BaseClient.getDefaultRequestSpecification;
 
 
 public final class UserClient {
-    private UserClient(){}
+    private UserClient() {
+    }
+
     public static Response registerAPI(UserData user) {
         return getDefaultRequestSpecification()
                 .body(user)

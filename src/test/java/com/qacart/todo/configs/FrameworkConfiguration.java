@@ -1,4 +1,5 @@
 package com.qacart.todo.configs;
+
 import org.aeonbits.owner.Config;
 
 @Config.LoadPolicy(Config.LoadType.MERGE)
