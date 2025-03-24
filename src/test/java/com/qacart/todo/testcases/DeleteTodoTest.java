@@ -27,8 +27,8 @@ public class DeleteTodoTest {
                 .when()
                 .post("/users/register");
 
-        System.out.println(registerResponse.asPrettyString());
         String accessToken = registerResponse.body().path("access_token");
+
         String todoItem = """
                 {
                   "item": "automation",
