@@ -5,6 +5,9 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static com.qacart.todo.clients.TodoClient.addTodoAPI;
+import static com.qacart.todo.clients.UserClient.registerAPI;
 import static com.qacart.todo.fixtures.TodoFixture.generateDefaultTodoItem;
 import static com.qacart.todo.fixtures.UserFixture.generateDefaultUser;
 import static io.restassured.RestAssured.given;
@@ -14,23 +17,12 @@ public class DeleteTodoTest {
     @Test
     public void userShouldBeAbleToDeleteTodo() {
 
-        Response registerationResponse = given()
-                .baseUri("https://todo.qacart.com/api/v1")
-                .contentType(ContentType.JSON)
-                .body(generateDefaultUser())
-                .when()
-                .post("/users/register");
+        Response registerationResponse = registerAPI(generateDefaultUser());
 
         RegisterResponse registerResponse = registerationResponse.as(RegisterResponse.class);
         String accessToken = registerResponse.getAccessToken();
 
-        Response addTodoAPI = given()
-                .baseUri("https://todo.qacart.com/api/v1")
-                .auth().oauth2(accessToken)
-                .contentType(ContentType.JSON)
-                .body(generateDefaultTodoItem())
-                .when()
-                .post("/tasks");
+        Response addTodoAPI = addTodoAPI(generateDefaultTodoItem(),accessToken);
 
         AddTodoResponse addTodoResponse = addTodoAPI.as(AddTodoResponse.class);
         String todo_ID = addTodoResponse.get_id();
